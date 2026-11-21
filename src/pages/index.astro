@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import SkillGroup from "../components/SkillGroup.astro";
+import TimelineItem from "../components/TimelineItem.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import EducationCard from "../components/EducationCard.astro";
+import AchievementItem from "../components/AchievementItem.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+import Footer from "../components/Footer.astro";
+
+import { skillGroups } from "../assets/data/skills.ts";
+import { experience } from "../assets/data/experience.ts";
+import { education } from "../assets/data/education.ts";
+import { projects } from "../assets/data/projects.ts";
+import { achievements } from "../assets/data/achievements.ts";
+import { profile } from "../assets/data/profile.ts";
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <Hero />
+
+<Section id="skills" eyebrow="What I work with" title="Skills" transitionName="skills-section">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+        {skillGroups.map((g) => <SkillGroup group={g} />)}
+     </div>
+    </Section>
+
+    <hr class="border-t border-slate-200 dark:border-slate-800" />
+
+    <Section id="experience" eyebrow="Where I've worked" title="Experience" transitionName="experience-section">
+      <div>
+        {experience.map((exp) => <TimelineItem experience={exp} />)}
+     </div>
+    </Section>
+
+    <hr class="border-t border-slate-200 dark:border-slate-800" />
+
+    <Section id="projects" eyebrow="Selected work" title="Projects" transitionName="projects-section">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((p) => <ProjectCard project={p} />)}
+     </div>
+    </Section>
+
+    <hr class="border-t border-slate-200 dark:border-slate-800" />
+
+    <Section id="education" eyebrow="Academic background" title="Education" transitionName="education-section">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {education.map((e) => <EducationCard education={e} />)}
+     </div>
+    </Section>
+
+    <hr class="border-t border-slate-200 dark:border-slate-800" />
+
+    <Section id="achievements" eyebrow="Recognition & milestones" title="Highlights" transitionName="achievements-section">
+      <div
+        class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6"
+      >
+        {achievements.map((a) => <AchievementItem achievement={a} />)}
+     </div>
+    </Section>
+
+    <hr class="border-t border-slate-200 dark:border-slate-800" />
+
+    <Section id="contact" eyebrow="Let's connect" title="Get in touch" transitionName="contact-section">
+      <div
+        class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+      >
+        <div>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-2">
+            I'm currently open to new opportunities — feel free to reach out
+            about roles, freelance work, or just to chat.
+         </p>
+          <a
+            href={`mailto:${profile.email}`}
+            class="inline-flex items-center text-accent-600 dark:text-accent-400 hover:underline font-medium"
+          >
+            {profile.email}
+         </a>
+       </div>
+        <SocialIcons size="lg" />
+     </div>
+   </Section>
+ </main>
+  <Footer />
+</BaseLayout>

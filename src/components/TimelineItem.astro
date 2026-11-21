@@ -1,0 +1,55 @@
+---
+import * as Lucide from "lucide-react";
+import { type Experience } from "../assets/data/experience";
+
+interface Props {
+  experience: Experience;
+}
+
+const { experience: exp } = Astro.props;
+---
+
+<article class="relative pl-8 md:pl-10 pb-10 last:pb-0">
+  <span
+    class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-accent-500 ring-4 ring-accent-500/20"
+    aria-hidden="true"
+  ></span>
+  <span
+    class="absolute left-[7px] top-6 bottom-0 w-px bg-slate-200 dark:bg-slate-800 last:hidden"
+    aria-hidden="true"
+  ></span>
+
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-slate-500 dark:text-slate-400 mb-2">
+    <span class="inline-flex items-center gap-1">
+      <Lucide.Calendar size={12} aria-hidden="true" />
+      <span>{exp.period}</span>
+    </span>
+    <span class="inline-flex items-center gap-1">
+      <Lucide.MapPin size={12} aria-hidden="true" />
+      <span>{exp.location}</span>
+    </span>
+  </div>
+
+  <h3 class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-0.5">
+    {exp.role}
+  </h3>
+
+  <div class="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400 mb-4">
+    <Lucide.Briefcase size={14} aria-hidden="true" />
+    <span>{exp.company}</span>
+  </div>
+
+  <ul class="space-y-2 text-slate-700 dark:text-slate-300">
+    {
+      exp.bullets.map((b) => (
+        <li class="relative pl-5 leading-relaxed">
+          <span
+            class="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-accent-500 shrink-0"
+            aria-hidden="true"
+          />
+          <span>{b}</span>
+        </li>
+      ))
+    }
+  </ul>
+</article>

@@ -1,0 +1,30 @@
+---
+interface Props {
+  id?: string;
+  title: string;
+  eyebrow?: string;
+  transitionName?: string;
+}
+
+const { id, title, eyebrow, transitionName } = Astro.props;
+---
+
+<section id={id} class="py-16 md:py-24 scroll-mt-20" transition:name={transitionName}>
+  <div class="max-w-6xl mx-auto px-6">
+    {
+      eyebrow && (
+        <p class="font-mono text-xs uppercase tracking-widest text-accent-600 dark:text-accent-400 mb-2">
+          {eyebrow}
+       </p>
+      )
+    }
+    <h2
+      class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-10"
+    >
+      {title}
+   </h2>
+    <div class="fade-in-section">
+      <slot />
+   </div>
+ </div>
+</section>

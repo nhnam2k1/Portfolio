@@ -1,0 +1,56 @@
+---
+import * as Lucide from "lucide-react";
+import { type Achievement } from "../assets/data/achievements";
+
+interface Props {
+  achievement: Achievement;
+}
+
+const { achievement } = Astro.props;
+---
+
+<div
+  class="flex items-start gap-3 py-3 border-b border-slate-200 dark:border-slate-800 last:border-0"
+>
+  <div
+    class="shrink-0 w-8 h-8 rounded-md bg-accent-500/10 text-accent-600 dark:text-accent-400 flex items-center justify-center"
+  >
+    <Lucide.Trophy size={16} aria-hidden="true" />
+  </div>
+  <div class="flex-1">
+    <h4 class="font-medium text-slate-900 dark:text-slate-100">
+      {achievement.title}
+    </h4>
+    {
+      achievement.detail && (
+        <p class="text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+          {achievement.detail}
+        </p>
+      )
+    }
+    {
+      achievement.bullets && (
+        <ul class="space-y-1 text-sm text-slate-600 dark:text-slate-400 mt-0.5">
+          {
+            achievement.bullets.map((b) => (
+              <li class="relative pl-5 leading-relaxed">
+                <span
+                  class="absolute left-0 top-2 w-1.5 h-1.5 rounded-full bg-accent-500 shrink-0"
+                  aria-hidden="true"
+                />
+                <span>{b}</span>
+              </li>
+            ))
+          }
+        </ul>
+      )
+    }
+  </div>
+  {
+    achievement.period && (
+      <span class="text-xs font-mono text-slate-500 dark:text-slate-400 shrink-0">
+        {achievement.period}
+      </span>
+    )
+  }
+</div>

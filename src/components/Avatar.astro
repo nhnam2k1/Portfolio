@@ -1,0 +1,25 @@
+---
+interface Props {
+  initials: string;
+  size?: "sm" | "md" | "lg" | "xl";
+}
+
+const { initials, size = "lg" } = Astro.props;
+
+const sizeMap = {
+  sm: "w-12 h-12 text-lg",
+  md: "w-16 h-16 text-2xl",
+  lg: "w-24 h-24 text-3xl",
+  xl: "w-36 h-36 text-5xl",
+};
+---
+
+<div
+  class:list={[
+    "rounded-full flex items-center justify-center font-semibold bg-gradient-to-br from-accent-500 to-accent-700 text-white shadow-lg ring-4 ring-accent-500/20",
+    sizeMap[size],
+  ]}
+  aria-hidden="true"
+>
+  {initials}
+</div>
