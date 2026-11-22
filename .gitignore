@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# npm lockfile (using Bun lockfile instead)
+package-lock.json
+
 # macOS-specific files
 .DS_Store
 
