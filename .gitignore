@@ -19,6 +19,10 @@ pnpm-debug.log*
 
 # npm lockfile (using Bun lockfile instead)
 package-lock.json
+yarn.lock
+
+# graphify knowledge graph (generated, not for repo)
+graphify-out/
 
 # macOS-specific files
 .DS_Store
