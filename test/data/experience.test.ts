@@ -42,5 +42,13 @@ describe('experience', () => {
     const vanderlande = experience.find((e) => e.company === 'Vanderlande Industries');
     expect(vanderlande).toBeDefined();
     expect(vanderlande!.period).toContain('2022');
+    expect(vanderlande!.bullets.length).toBe(2);
+    expect(vanderlande!.bullets[0]).toContain('Improved RESTful APIs');
+  });
+
+  it('should have unique company names', () => {
+    const companies = experience.map((e) => e.company);
+    const unique = new Set(companies);
+    expect(unique.size).toBe(companies.length);
   });
 });

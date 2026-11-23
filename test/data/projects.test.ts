@@ -47,5 +47,20 @@ describe('projects', () => {
     expect(tool).toBeDefined();
     expect(tool!.stack).toContain('C#');
     expect(tool!.stack).toContain('NUnit');
+    expect(tool!.image).toBe('/images/nqi.png');
+  });
+
+  it('projects with image should have valid image path', () => {
+    projects.forEach((p) => {
+      if (p.image) {
+        expect(p.image).toMatch(/^\/images\/.*\.(png|jpg|jpeg|webp|svg)$/);
+      }
+    });
+  });
+
+  it('should have unique project titles', () => {
+    const titles = projects.map((p) => p.title);
+    const unique = new Set(titles);
+    expect(unique.size).toBe(titles.length);
   });
 });
