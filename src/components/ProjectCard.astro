@@ -1,5 +1,9 @@
 ---
 import * as Lucide from "lucide-react";
+import { Image } from "astro:assets";
+import chatsAppImage from "../assets/images/chats-app.png";
+import virtualHumanImage from "../assets/images/virtual-human.png";
+import nqiImage from "../assets/images/nqi.png";
 import { type Project } from "../assets/data/projects";
 
 interface Props {
@@ -7,16 +11,102 @@ interface Props {
 }
 
 const { project } = Astro.props;
+
+const imageMap = {
+  "/images/chats-app.png": chatsAppImage,
+  "/images/virtual-human.png": virtualHumanImage,
+  "/images/nqi.png": nqiImage,
+};
+
+const imageMeta = project.image
+  ? imageMap[project.image as keyof typeof imageMap]
+  : undefined;
 ---
 
 <article
   class="group relative rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:border-accent-500 dark:hover:border-accent-500 transition-colors flex flex-col"
 >
   <div
-    class="aspect-video rounded-md bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-800 mb-5 flex items-center justify-center overflow-hidden"
+    class="rounded-md bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 border border-slate-200 dark:border-slate-800 mb-5 flex items-center justify-center relative group"
   >
-    <Lucide.Code2 size={48} className="text-slate-400 dark:text-slate-600" aria-hidden="true" />
+    {
+      imageMeta ? (
+        <>
+          <Image
+            src={imageMeta}
+            alt={project.title}
+            width={imageMeta.width}
+            height={imageMeta.height}
+            class="max-w-full object-contain transition-transform duration-200 cursor-pointer image-trigger"
+            data-image-src={imageMeta.src}
+          />
+          <div
+            data-image-modal
+            class="fixed left-0 right-0 bottom-0 z-40 flex items-start justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+            aria-hidden="true"
+          >
+            <div
+              class="relative max-w-[90vw] max-h-[calc(100vh-4rem)] mx-auto"
+            >
+              <img
+                class="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+                src={imageMeta.src}
+                alt={project.title}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <Lucide.Code2 size={48} className="text-slate-400 dark:text-slate-600" aria-hidden="true" />
+      )
+    }
   </div>
+
+  <script>
+    document.querySelectorAll<HTMLImageElement>('.image-trigger').forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const card = trigger.closest('.group');
+        if (!card) return;
+        const modal = card.querySelector<HTMLElement>('[data-image-modal]');
+        if (!modal) return;
+        const modalImg = modal.querySelector('img');
+        if (!modalImg) return;
+
+        // Position modal right below the navbar (dynamic, based on actual navbar height)
+        const navbar = document.querySelector('header');
+        const navbarBottom = navbar ? navbar.getBoundingClientRect().bottom : 0;
+        modal.style.top = `${navbarBottom}px`;
+
+        modalImg.src = trigger.dataset.imageSrc ?? trigger.src;
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        modal.classList.add('opacity-100', 'pointer-events-auto');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-image-modal]').forEach((modal) => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('opacity-100', 'pointer-events-auto');
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll<HTMLElement>('[data-image-modal]').forEach((m) => {
+          m.classList.remove('opacity-100', 'pointer-events-auto');
+          m.classList.add('opacity-0', 'pointer-events-none');
+          m.setAttribute('aria-hidden', 'true');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
 
   <h3
     class="text-xl font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors"

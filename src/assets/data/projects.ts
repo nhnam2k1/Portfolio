@@ -3,6 +3,7 @@ export type Project = {
   summary: string;
   stack: string[];
   highlights: string[];
+  image?: string;
   repoUrl?: string;
   demoUrl?: string;
 };
@@ -25,6 +26,7 @@ export const projects: Project[] = [
       "Tuned Parallel Garbage Collector to keep Kafka broker memory usage around 600MB while maintaining low message latency.",
       "Implemented CI/CD pipeline with Unit Tests, SonarQube analysis, and Trivy scanning to automate quality and security checks.",
     ],
+    image: "/images/virtual-human.png",
     demoUrl: "https://portfolio.drieam.app/s/GuxUr36X/dmYorrdMjiyMTrarj97K3tio",
   },
   {
@@ -46,6 +48,7 @@ export const projects: Project[] = [
       "Designed and load-tested real-time messaging architecture; evaluated WebSocket-based transport options and selected SignalR to support around 30,000 concurrent connections in a single pod instance.",
       "Earned Advanced (4/4) in DevOps and Security by Design, and Proficient (3/4) in Cloud Native, Scalable Architectures, and Distributed Data.",
     ],
+    image: "/images/chats-app.png",
     demoUrl: "https://portfolio.drieam.app/s/GuxUr36X/nRQWULvBCeP9Ca5n5X9WmkWa",
   },
   {
@@ -58,5 +61,6 @@ export const projects: Project[] = [
       "Implemented 50 unit tests using NUnit for behavior validation before deployment.",
       "Released new version to departments across the organization after a 3-month rollout.",
     ],
+    image: "/images/nqi.png",
   },
 ];
